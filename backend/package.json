@@ -4,10 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "debug": "nodemon --inspect src/index.js"
   },
   "dependencies": {
     "axios": "^0.19.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.8.9"
   },
