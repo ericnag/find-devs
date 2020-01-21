@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, View, Text } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import {
   requestPermissionsAsync,
   getCurrentPositionAsync
 } from "expo-location";
 
-function Main() {
+function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
 
   useEffect(() => {
@@ -38,10 +38,26 @@ function Main() {
 
   return (
     <MapView initialRegion={currentRegion} style={styles.map}>
-      <Marker
-        coordinate={{ latitude: -22.2240004, longitude: -54.7945332 }}
-      >
-          <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/26968294?s=460&v=4'}}/>
+      <Marker coordinate={{ latitude: -22.2240004, longitude: -54.7945332 }}>
+        <Image
+          style={styles.avatar}
+          source={{
+            uri: "https://avatars2.githubusercontent.com/u/26968294?s=460&v=4"
+          }}
+        />
+
+        <Callout onPress={()=> {
+          navigation.navigate('Profile', { github_username: 'ericnag' });
+        }}>
+          <View style={styles.callout}>
+            <Text style={styles.devName}>Diego Fernandes</Text>
+            <Text style={styles.devBio}>
+              Desenvolvedor Full Stack apaixonado em aprender novas tecnologias
+              e encarar novos desafios.
+            </Text>
+            <Text style={styles.devTechs}>ReactJS, React Native, Node.js</Text>
+          </View>
+        </Callout>
       </Marker>
     </MapView>
   );
@@ -53,11 +69,27 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
-      width: 54,
-      height: 54,
-      borderRadius: 4,
-      borderWidth: 4,
-      borderColor: '#FFF'
+    width: 54,
+    height: 54,
+    borderRadius: 4,
+    borderWidth: 4,
+    borderColor: "#FFF"
+  },
+
+  callout: {
+    width: 260
+  },
+
+  devName: {
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  devBio: {
+    color: "#666",
+    marginTop: 5
+  },
+  devTechs: {
+    marginTop: 5
   }
 });
 
