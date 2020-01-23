@@ -15,6 +15,7 @@ import {
 } from "expo-location";
 
 import api from "../services/api";
+import { connect, disconnect } from '../services/socket';
 
 function Main({ navigation }) {
   const [devs, setDevs] = useState([]);
@@ -44,6 +45,16 @@ function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  function setupWebSocket(){
+    const { latitude, longitude } = currentRegion;
+
+    connect(
+      latitude,
+      longitude,
+      techs
+    );  
+  }
+
   async function loadDevs() {
     const { latitude, longitude } = currentRegion;
 
@@ -57,6 +68,7 @@ function Main({ navigation }) {
 
     console.log(response)
     setDevs(response.data.devs);
+    setupWebSocket();
   }
 
   function handleRegionChanged(region) {
